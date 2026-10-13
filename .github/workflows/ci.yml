@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install
+        run: pip install -e ".[dev,gplearn]"
+      - name: Lint (ruff)
+        run: ruff check symforge tests examples scripts
+      - name: Tests (pytest)
+        run: pytest tests/ -q --cov=symforge --cov-report=term-missing
+      - name: Demo smoke (G5 ≤ 60s)
+        run: python examples/run_demo.py

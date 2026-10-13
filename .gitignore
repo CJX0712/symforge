@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.eggs/
+
+# 环境
+.venv/
+venv/
+.env
+
+# 工具缓存
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# IDE
+.idea/
+.vscode/
+
+# 运行产物（门禁报告 results/*.json 保留入库，供复现审计）
+*.log
